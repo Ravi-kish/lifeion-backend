@@ -188,13 +188,20 @@ export const getProductsByCategory = async (req: Request, res: Response) => {
   try {
     const categoryId = Number(req.params.id);
 
-    const [rows]: any = await pool.query(
-      `SELECT product_id, name, description, price, image_url, category_id
-       FROM products
-       WHERE category_id = ?
-       ORDER BY name ASC`,
-      [categoryId]
-    );
+    const [rows]: any = await pool.query(`
+      SELECT
+        p.product_id,
+        p.name,
+        p.description,
+        p.price,
+        p.image_url,
+        p.category_id,
+        c.menu_type_id
+      FROM products p
+      JOIN categories c ON c.category_id = p.category_id
+      WHERE p.category_id = ?
+      ORDER BY p.name ASC
+    `, [categoryId]);
 
     res.json({ success: true, products: rows });
   } catch (err) {

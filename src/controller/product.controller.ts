@@ -49,18 +49,33 @@ export const getAll = async (req: Request, res: Response) => {
 
 
 
+// product.controller.ts
 export const getById = async (req: Request, res: Response) => {
   try {
-    const id = Number(req.params.id);
+    const productId = Number(req.params.id);
 
     const [rows]: any = await pool.query(`
-      SELECT 
-        p.*,
-        c.menu_type
+      SELECT
+        p.product_id,
+        p.name,
+        p.sub_name,
+        p.description,
+        p.price,
+        p.stock_quantity,
+        p.category_id,
+        p.specifications,
+        p.counter_details,
+        p.warranty_installation,
+        p.details,
+        p.image_url,
+        p.image_url1, p.image_url2, p.image_url3, p.image_url4, p.image_url5,
+        p.image_url6, p.image_url7, p.image_url8, p.image_url9, p.image_url10,
+        p.created_at,
+        c.menu_type_id
       FROM products p
       JOIN categories c ON c.category_id = p.category_id
       WHERE p.product_id = ?
-    `, [id]);
+    `, [productId]);
 
     if (!rows.length) {
       return res.status(404).json({ message: 'Product not found' });
@@ -72,6 +87,7 @@ export const getById = async (req: Request, res: Response) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+
 
 
 
