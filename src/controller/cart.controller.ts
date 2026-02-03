@@ -13,7 +13,7 @@ export const getAllCartItems = async (req: Request, res: Response) => {
   }
 };
 
-/* ------------------------------- GET BY ID -------------------------------- */
+/* ------------------------------- GET BY ID ------------------------------ */
 export const getCartItemById = async (req: Request, res: Response) => {
   const id = Number(req.params.id);
 
@@ -79,7 +79,7 @@ export const getcartByUserId = async (req: Request, res: Response) => {
 };
 
 
-/* ---------------------------- ADD CART ITEM ------------------------------- */
+
 export const addCartItem = async (req: Request, res: Response) => {
   const { user_id, product_id, quantity } = req.body;
 
